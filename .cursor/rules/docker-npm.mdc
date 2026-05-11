@@ -1,0 +1,19 @@
+---
+description: npm / Node のコマンドは Docker コンテナ内でのみ実行する
+alwaysApply: true
+---
+
+# npm は Docker コンテナ内のみ
+
+このリポジトリでは **ホスト環境で `npm` / `npx` / `node_modules/.bin` を直接実行しない**。
+
+## エージェント向け
+
+- **開発用コンテナが起動中**（`docker compose up` など）のとき  
+  `docker compose exec web npm <サブコマンド>`  
+  例: `docker compose exec web npm run lint`
+- **ワンショット**（ビルドやインストールのみなど）  
+  `docker compose run --rm web sh -c "npm install && npm <サブコマンド>"`  
+  例: `docker compose run --rm web sh -c "npm install && npm run build"`
+
+サービス名は `docker-compose.yml` の `web`。`package-lock.json` を変えたあとは、上記いずれかの経路でコンテナ内の `npm install` を実行する。
