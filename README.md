@@ -68,11 +68,16 @@ docker compose exec web npm run build
 └── package.json
 ```
 
-## 書き順データの拡張
+## 書き順データ
 
-`lib/hiragana.ts` の `HIRAGANA_LIST` の各エントリに `strokes` (SVG path d-attribute の配列) を追加するだけで、新しい文字の書き順練習を有効化できます。viewBox は `0 0 100 100` です。
+書き順 SVG パスは [KanjiVG](https://kanjivg.tagaini.net/) (Copyright © Ulrich Apel, CC BY-SA 3.0) を利用しています。`scripts/fetch-kanjivg.mjs` で清音46文字分を一括取得し、`lib/hiragana-strokes.json` に保存されます。viewBox は KanjiVG 標準の `0 0 109 109` です。
 
-現在 書き順データを同梱している文字: あ・い・う・え・お・か・き・く・け・こ・さ・し・す・せ・そ (15文字)
+```bash
+# データを更新する場合 (コンテナ内で実行)
+docker compose exec web node scripts/fetch-kanjivg.mjs
+```
+
+ライセンス上、KanjiVG のパスを再配布する場合は同ライセンスで配布する必要があります。
 
 ## 判定の仕組み
 

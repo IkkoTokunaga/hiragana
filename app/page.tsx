@@ -48,11 +48,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mt-6 rounded-2xl bg-amber-50 p-4 text-sm text-amber-800">
-        <strong>おしらせ:</strong>{" "}
-        ピンク「じゅんび」マークの ひらがなは、かきじゅん データを じゅんび ちゅうです。
-        あ ぎょう、か ぎょう、さ ぎょう（15もじ）が
-        いま すぐに あそべます。
+      <section className="mt-6 rounded-2xl bg-amber-50 p-4 text-xs text-amber-800">
+        <p>
+          <strong>おしらせ:</strong>{" "}
+          せいおん 46もじ ぜんぶで、かきじゅん アニメーションと なぞり れんしゅうが できます。
+        </p>
+        <p className="mt-1 text-amber-700">
+          かきじゅんデータ ていきょう: <a
+            href="https://kanjivg.tagaini.net"
+            className="underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >KanjiVG</a>
+          {" "}(CC BY-SA 3.0)
+        </p>
       </section>
     </div>
   );

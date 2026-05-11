@@ -1,3 +1,5 @@
+import strokesJson from "./hiragana-strokes.json";
+
 export type HiraganaWord = {
   word: string;
   emoji: string;
@@ -11,18 +13,18 @@ export type HiraganaItem = {
   words: HiraganaWord[];
 };
 
-export const VIEW_BOX = "0 0 100 100";
+// KanjiVG SVGs are authored on a 109x109 grid.
+export const VIEW_BOX = "0 0 109 109";
 
-const data: HiraganaItem[] = [
+const STROKES = strokesJson as Record<string, string[]>;
+
+type BaseEntry = Omit<HiraganaItem, "strokes">;
+
+const BASE: BaseEntry[] = [
   {
     char: "あ",
     reading: "あ",
     romaji: "a",
-    strokes: [
-      "M22,32 Q45,30 75,30",
-      "M52,18 Q50,50 42,75 Q38,82 32,80",
-      "M72,38 Q88,52 78,72 Q60,88 38,78 Q22,68 35,55 Q55,46 72,58",
-    ],
     words: [
       { word: "あり", emoji: "🐜" },
       { word: "あめ", emoji: "🌧️" },
@@ -33,10 +35,6 @@ const data: HiraganaItem[] = [
     char: "い",
     reading: "い",
     romaji: "i",
-    strokes: [
-      "M28,30 Q22,55 30,75 Q38,82 48,72",
-      "M70,35 Q68,55 70,68",
-    ],
     words: [
       { word: "いぬ", emoji: "🐶" },
       { word: "いす", emoji: "🪑" },
@@ -47,10 +45,6 @@ const data: HiraganaItem[] = [
     char: "う",
     reading: "う",
     romaji: "u",
-    strokes: [
-      "M42,20 L60,22",
-      "M28,42 Q52,32 75,42 Q85,58 60,78 Q35,85 22,75",
-    ],
     words: [
       { word: "うみ", emoji: "🌊" },
       { word: "うし", emoji: "🐄" },
@@ -61,10 +55,6 @@ const data: HiraganaItem[] = [
     char: "え",
     reading: "え",
     romaji: "e",
-    strokes: [
-      "M48,15 Q50,20 55,22",
-      "M28,38 L72,38 L30,78 Q50,82 75,72",
-    ],
     words: [
       { word: "えき", emoji: "🚉" },
       { word: "えほん", emoji: "📖" },
@@ -75,11 +65,6 @@ const data: HiraganaItem[] = [
     char: "お",
     reading: "お",
     romaji: "o",
-    strokes: [
-      "M22,32 L72,30",
-      "M52,18 Q50,55 38,75 Q30,82 25,75 Q22,65 35,62",
-      "M75,55 Q82,65 78,72",
-    ],
     words: [
       { word: "おに", emoji: "👹" },
       { word: "おちゃ", emoji: "🍵" },
@@ -90,11 +75,6 @@ const data: HiraganaItem[] = [
     char: "か",
     reading: "か",
     romaji: "ka",
-    strokes: [
-      "M22,32 Q50,28 72,32 Q80,42 72,55 Q55,75 38,82 Q25,82 26,68",
-      "M42,18 Q44,55 52,78",
-      "M78,32 Q82,40 78,48",
-    ],
     words: [
       { word: "かさ", emoji: "☂️" },
       { word: "かに", emoji: "🦀" },
@@ -105,12 +85,6 @@ const data: HiraganaItem[] = [
     char: "き",
     reading: "き",
     romaji: "ki",
-    strokes: [
-      "M22,32 L78,30",
-      "M22,50 L78,48",
-      "M58,18 Q35,42 22,60",
-      "M30,70 Q48,82 38,90",
-    ],
     words: [
       { word: "きつね", emoji: "🦊" },
       { word: "きく", emoji: "🌼" },
@@ -121,7 +95,6 @@ const data: HiraganaItem[] = [
     char: "く",
     reading: "く",
     romaji: "ku",
-    strokes: ["M65,22 Q35,50 65,80"],
     words: [
       { word: "くつ", emoji: "👟" },
       { word: "くも", emoji: "☁️" },
@@ -132,11 +105,6 @@ const data: HiraganaItem[] = [
     char: "け",
     reading: "け",
     romaji: "ke",
-    strokes: [
-      "M30,25 Q28,55 32,82 Q35,88 42,80",
-      "M45,38 L75,38",
-      "M68,30 Q70,55 65,78 Q60,85 55,80",
-    ],
     words: [
       { word: "けむり", emoji: "💨" },
       { word: "けいと", emoji: "🧶" },
@@ -147,10 +115,6 @@ const data: HiraganaItem[] = [
     char: "こ",
     reading: "こ",
     romaji: "ko",
-    strokes: [
-      "M28,30 L70,28 Q72,38 60,38",
-      "M25,72 L72,70",
-    ],
     words: [
       { word: "こま", emoji: "🌀" },
       { word: "ことり", emoji: "🐦" },
@@ -161,11 +125,6 @@ const data: HiraganaItem[] = [
     char: "さ",
     reading: "さ",
     romaji: "sa",
-    strokes: [
-      "M30,30 L72,30",
-      "M55,18 Q52,55 35,75",
-      "M30,55 Q50,48 72,58 Q80,70 65,82 Q45,88 30,82",
-    ],
     words: [
       { word: "さかな", emoji: "🐟" },
       { word: "さくら", emoji: "🌸" },
@@ -176,9 +135,6 @@ const data: HiraganaItem[] = [
     char: "し",
     reading: "し",
     romaji: "shi",
-    strokes: [
-      "M40,20 Q38,55 40,75 Q50,85 70,75 Q78,68 75,60",
-    ],
     words: [
       { word: "しか", emoji: "🦌" },
       { word: "しお", emoji: "🧂" },
@@ -189,10 +145,6 @@ const data: HiraganaItem[] = [
     char: "す",
     reading: "す",
     romaji: "su",
-    strokes: [
-      "M22,35 L78,33",
-      "M52,18 Q50,52 38,62 Q35,68 42,72 Q60,72 65,82 Q60,90 50,85",
-    ],
     words: [
       { word: "すいか", emoji: "🍉" },
       { word: "すずめ", emoji: "🐦" },
@@ -203,11 +155,6 @@ const data: HiraganaItem[] = [
     char: "せ",
     reading: "せ",
     romaji: "se",
-    strokes: [
-      "M22,38 L70,36 Q78,46 70,55",
-      "M48,22 Q50,55 55,82",
-      "M22,68 L78,66",
-    ],
     words: [
       { word: "せみ", emoji: "🦗" },
       { word: "せんせい", emoji: "👩\u200d🏫" },
@@ -218,9 +165,6 @@ const data: HiraganaItem[] = [
     char: "そ",
     reading: "そ",
     romaji: "so",
-    strokes: [
-      "M28,28 L65,26 L30,50 L72,50 Q80,65 60,80 Q35,85 25,75",
-    ],
     words: [
       { word: "そら", emoji: "☁️" },
       { word: "そふ", emoji: "👴" },
@@ -508,14 +452,18 @@ const data: HiraganaItem[] = [
   },
 ];
 
+const data: HiraganaItem[] = BASE.map((b) => ({
+  ...b,
+  strokes: STROKES[b.char],
+}));
+
 export const HIRAGANA_LIST: HiraganaItem[] = data;
 
 export const HIRAGANA_MAP: Record<string, HiraganaItem> = Object.fromEntries(
   data.map((h) => [h.char, h]),
 );
 
-// Grid layout for the 50-sounds chart (gyou × dan).
-// Empty strings = blank cell in the standard layout.
+// Standard 50-sounds chart layout (gyou × dan). Empty strings = blank cell.
 export const GOJUON_GRID: string[][] = [
   ["あ", "い", "う", "え", "お"],
   ["か", "き", "く", "け", "こ"],
