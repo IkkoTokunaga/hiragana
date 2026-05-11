@@ -23,20 +23,11 @@ export const metadata: Metadata = {
     siteName,
     locale: "ja_JP",
     type: "website",
-    images: [
-      {
-        url: "/og.png",
-        width: 290,
-        height: 289,
-        alt: "ひらがな「あ」の筆順つきイメージ",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteName,
     description: siteDescription,
-    images: ["/og.png"],
   },
 };
 
