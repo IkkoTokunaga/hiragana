@@ -480,3 +480,19 @@ export const GOJUON_GRID: string[][] = [
 export function getHiragana(char: string): HiraganaItem | undefined {
   return HIRAGANA_MAP[char];
 }
+
+/** ひらがな一覧の順（清音46文字）で 1つ前へ。先頭なら末尾へ */
+export function getPrevHiraganaChar(current: string): string {
+  const idx = HIRAGANA_LIST.findIndex((h) => h.char === current);
+  if (idx === -1) return HIRAGANA_LIST[0].char;
+  if (idx === 0) return HIRAGANA_LIST[HIRAGANA_LIST.length - 1].char;
+  return HIRAGANA_LIST[idx - 1].char;
+}
+
+/** ひらがな一覧の順で 1つ先へ。末尾なら先頭へ */
+export function getNextHiraganaChar(current: string): string {
+  const idx = HIRAGANA_LIST.findIndex((h) => h.char === current);
+  if (idx === -1) return HIRAGANA_LIST[0].char;
+  if (idx >= HIRAGANA_LIST.length - 1) return HIRAGANA_LIST[0].char;
+  return HIRAGANA_LIST[idx + 1].char;
+}

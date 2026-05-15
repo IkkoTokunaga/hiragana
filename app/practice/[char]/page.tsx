@@ -4,7 +4,11 @@ import StrokeAnimation from "@/components/StrokeAnimation";
 import TraceCanvas from "@/components/TraceCanvas";
 import FreeCanvas from "@/components/FreeCanvas";
 import WordExamples from "@/components/WordExamples";
-import { HIRAGANA_MAP } from "@/lib/hiragana";
+import {
+  HIRAGANA_MAP,
+  getNextHiraganaChar,
+  getPrevHiraganaChar,
+} from "@/lib/hiragana";
 
 export const dynamicParams = true;
 
@@ -16,6 +20,9 @@ export default function PracticePage({
   const char = decodeURIComponent(params.char);
   const item = HIRAGANA_MAP[char];
   if (!item) notFound();
+
+  const prevChar = getPrevHiraganaChar(char);
+  const nextChar = getNextHiraganaChar(char);
 
   const hasStrokes = !!item.strokes && item.strokes.length > 0;
 
@@ -92,12 +99,26 @@ export default function PracticePage({
         <WordExamples char={item.char} words={item.words} />
       </section>
 
-      <div className="pt-2 text-center">
+      <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <Link
+          href={`/practice/${encodeURIComponent(prevChar)}`}
+          className="inline-block rounded-full border-2 border-primary-400 bg-white px-4 py-2 text-sm font-bold text-primary-700 shadow-sm hover:bg-primary-50 active:bg-primary-100 sm:text-base sm:px-5"
+          aria-label={`まえの もじ ${prevChar} へ`}
+        >
+          ← {prevChar}
+        </Link>
         <Link
           href="/"
           className="inline-block rounded-full bg-primary-500 px-6 py-2 text-base font-bold text-white shadow-md hover:bg-primary-600 active:bg-primary-700"
         >
           ほかの もじを えらぶ
+        </Link>
+        <Link
+          href={`/practice/${encodeURIComponent(nextChar)}`}
+          className="inline-block rounded-full border-2 border-primary-400 bg-white px-4 py-2 text-sm font-bold text-primary-700 shadow-sm hover:bg-primary-50 active:bg-primary-100 sm:text-base sm:px-5"
+          aria-label={`つぎの もじ ${nextChar} へ`}
+        >
+          {nextChar} →
         </Link>
       </div>
     </div>
