@@ -4,6 +4,7 @@ import StrokeAnimation from "@/components/StrokeAnimation";
 import TraceCanvas from "@/components/TraceCanvas";
 import FreeCanvas from "@/components/FreeCanvas";
 import WordExamples from "@/components/WordExamples";
+import ScrollSectionButtons from "@/components/ScrollSectionButtons";
 import {
   HIRAGANA_MAP,
   getNextHiraganaChar,
@@ -11,6 +12,10 @@ import {
 } from "@/lib/hiragana";
 
 export const dynamicParams = true;
+
+const TRACE_SECTION_ID = "section-trace";
+const FREE_SECTION_ID = "section-free";
+const BOTTOM_NAV_ID = "bottom-nav";
 
 export default function PracticePage({
   params,
@@ -63,14 +68,14 @@ export default function PracticePage({
             </div>
           </section>
 
-          <section>
+          <section id={TRACE_SECTION_ID} className="scroll-mt-20">
             <h2 className="mb-3 text-lg font-bold text-primary-700">
               ② なぞって かいてみよう
             </h2>
             <TraceCanvas char={item.char} strokes={item.strokes!} />
           </section>
 
-          <section>
+          <section id={FREE_SECTION_ID} className="scroll-mt-20">
             <h2 className="mb-3 text-lg font-bold text-primary-700">
               ③ じゆうに かいてみよう
             </h2>
@@ -99,7 +104,10 @@ export default function PracticePage({
         <WordExamples char={item.char} words={item.words} />
       </section>
 
-      <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+      <div
+        id={BOTTOM_NAV_ID}
+        className="flex flex-wrap items-center justify-center gap-3 pt-2"
+      >
         <Link
           href={`/practice/${encodeURIComponent(prevChar)}`}
           className="inline-block rounded-full border-2 border-primary-400 bg-white px-4 py-2 text-sm font-bold text-primary-700 shadow-sm hover:bg-primary-50 active:bg-primary-100 sm:text-base sm:px-5"
@@ -121,6 +129,14 @@ export default function PracticePage({
           {nextChar} →
         </Link>
       </div>
+
+      {hasStrokes && (
+        <ScrollSectionButtons
+          traceId={TRACE_SECTION_ID}
+          freeId={FREE_SECTION_ID}
+          hideWhenVisibleId={BOTTOM_NAV_ID}
+        />
+      )}
     </div>
   );
 }
